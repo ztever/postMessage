@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>post html</title>
+</head>
+
+<body>
+  <h2>post html</h2>
+
+  <div onclick="clickFn()" style="line-height: 60px;">open recive.html</div>
+  <div onclick="clickFn2()" style="line-height: 60px;margin: 20px ;">click send message to receive.html</div>
+
+  <p class="text"></p>
+</body>
+<script>
+  let page
+
+  function clickFn() {
+    page = window.open('http://127.0.0.1:8888/recive.html');
+  }
+
+  function clickFn2() {
+    page.postMessage('post.html say hello to recive.html', 'http://127.0.0.1:8888')
+  }
+
+  //监听消息反馈
+  window.addEventListener('message', function (event) {
+    console.log('received response:  ', event.data);
+    document.querySelector('.text').innerHTML = event.data
+  }, false);
+</script>
+
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>recive html</title>
+</head>
+
+<body>
+  <h2>recive html</h2>
+  <div class="send-message" style="height: 40px;margin:20px"> click to send message to post.html</div>
+  <p class="text"></p>
+</body>
+
+<script>
+  window.onload = function (event) {
+    var parentTarget = top.opener;
+    try {
+      parentTarget.postMessage('recive.html had loaded')
+    } catch (error) {
+      // 
+    }
+    window.addEventListener("message", (e) => {
+      console.log(e)
+      if (e.origin === 'http://127.0.0.1:8888') {
+        document.querySelector('.text').innerHTML = e.data
+        // parentTarget = e.source;
+        // console.log('parentTarget'.e.source)
+      }
+    })
+
+    document.querySelector('.send-message').onclick = function () {
+      parentTarget.postMessage('hello ,this is a message come from revicve.html')
+    }
+    window.onunload = function () {
+      parentTarget.postMessage('recive.html had closed')
+    }
+  }
+</script>
+
+</html>
